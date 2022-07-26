@@ -6,6 +6,9 @@ pool:
   demands:
   - npm
 
+variables:
+  buildConfiguration: 'Release'
+
 steps:
 - task: UseDotNet@2
   displayName: 'Use .NET SDK 6.x'
@@ -43,13 +46,13 @@ steps:
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish the project - Release'
-  inputs: 
+  inputs:
     command: 'publish'
     projects: '**/*.csproj'
     publishWebProjects: false
-    arguments: '--no-build --configuration Release --output $(Build.ArtifactsStagingDirectory)/Release'
+    arguments: '--no-build --configuration Release --output $(Build.ArtifactStagingDirectory)/Release'
     zipAfterPublish: true
 
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish Build Artifact: drop'
+  displayName: 'Publish Artifact: drop'
   condition: succeeded()
